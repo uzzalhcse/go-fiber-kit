@@ -1,0 +1,17 @@
+package config
+
+import "github.com/spf13/viper"
+
+type AppConfig struct {
+	Name  string
+	Env   string
+	Debug bool
+	Port  string
+}
+
+func loadAppConfig() AppConfig {
+	return AppConfig{
+		Name: viper.GetString("APP_NAME"),
+		Port: viper.GetString("APP_PORT"),
+	}
+}

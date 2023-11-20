@@ -7,6 +7,7 @@ import (
 type Config struct {
 	App      AppConfig
 	Database DatabaseConfig
+	Amadeus  AmadeusConfig
 }
 
 // NewConfig loads the common configuration from environment variables
@@ -23,5 +24,6 @@ func NewConfig() *Config {
 	return &Config{
 		App:      loadAppConfig(),
 		Database: loadDBConfig(),
+		Amadeus:  loadAmadeusConfig(),
 	}
 }

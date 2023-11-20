@@ -1,5 +1,4 @@
-// amadeus/flight/flight_offer_data.go
-package flight
+package models
 
 type FlightOfferData struct {
 	Meta         Meta          `json:"meta"`

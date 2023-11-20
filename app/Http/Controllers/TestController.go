@@ -3,7 +3,7 @@ package Controllers
 import (
 	"fmt"
 	"github.com/gofiber/fiber/v2"
-	"github.com/uzzalhcse/amadeus-go/core/container"
+	"github.com/uzzalhcse/amadeus-go/app/Services"
 	"github.com/uzzalhcse/amadeus-go/pkg/amadeus"
 	"github.com/uzzalhcse/amadeus-go/pkg/amadeus/flight"
 )
@@ -11,26 +11,21 @@ import (
 // TestController defines a controller for handling test-related requests
 type TestController struct {
 	*BaseController
+	TestService *Services.TestService
 }
 
 // NewTestController creates a new instance of the test controller
-func NewTestController(container *container.Container) *TestController {
-	return &TestController{NewBaseController(container)}
+func NewTestController(testService *Services.TestService) *TestController {
+	return &TestController{
+		BaseController: NewBaseController(),
+		TestService:    testService,
+	}
 }
 
-func (h *TestController) Test(c *fiber.Ctx) error {
+func (that *TestController) Test(c *fiber.Ctx) error {
 	// Access configuration using the embedded Config instance
-	//apiKey := h.Container.App.Config.Amadeus.APIKey
-	//apiSecret := h.Container.App.Config.Amadeus.APISecret
-	//
-	//// Access the TestService
-	//result, err := h.Container.TestService.DoSomething()
-	//if err != nil {
-	//	// handle error
-	//	return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": err.Error()})
-	//}
-	apiKey := "wGhv7zl6MfpoxRGA9YEA3w8dgcKqVqov"
-	apiSecret := "4nccwD5I2O5eh9wy"
+	apiKey := that.Config.Amadeus.APIKey
+	apiSecret := that.Config.Amadeus.APISecret
 	client := amadeus.NewClient(apiKey, apiSecret)
 	flightService := flight.NewFlightService(client)
 	response, err := flightService.OfferSearch().
@@ -54,8 +49,8 @@ func (h *TestController) Test(c *fiber.Ctx) error {
 }
 
 // GetAllHandler handles the route to get all records
-func (h *TestController) GetAllHandler(c *fiber.Ctx) error {
-	models, err := h.Container.TestService.GetAll()
+func (that *TestController) GetAllHandler(c *fiber.Ctx) error {
+	models, err := that.TestService.GetAll()
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": err.Error()})
 	}

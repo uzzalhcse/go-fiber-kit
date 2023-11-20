@@ -1,19 +1,21 @@
 package flight
 
-import "github.com/uzzalhcse/amadeus-go/pkg/amadeus"
+import (
+	"github.com/uzzalhcse/amadeus-go/pkg/amadeus"
+)
 
 type Service struct {
-	client *amadeus.Client
+	Client *amadeus.Client
 }
 
 func NewFlightService(client *amadeus.Client) *Service {
-	return &Service{client: client}
+	return &Service{Client: client}
 }
 
 func (s *Service) OfferSearch() *SearchRequest {
-	return &SearchRequest{service: s}
+	return &SearchRequest{Service: s}
 }
 
 func (s *Service) OfferPrice() *PricingRequest {
-	return &PricingRequest{service: s}
+	return &PricingRequest{Service: s}
 }

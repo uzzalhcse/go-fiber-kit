@@ -1,16 +1,12 @@
-// main.go
-
 package main
 
 import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/uzzalhcse/amadeus-go/app/Providers"
 	"github.com/uzzalhcse/amadeus-go/app/exceptions"
 	"github.com/uzzalhcse/amadeus-go/bootstrap"
-	"github.com/uzzalhcse/amadeus-go/core/container"
-	"github.com/uzzalhcse/amadeus-go/routes"
-	"github.com/uzzalhcse/amadeus-go/server"
 	"log"
 	"net/http"
 	"os"
@@ -22,25 +18,16 @@ import (
 func main() {
 	app := bootstrap.App()
 	defer app.CloseDBConnection()
+	app.ConnectDB()
 
-	// Register service providers
-	container.RegisterServiceProvider(&container.TestServiceProvider{})
-	// Register more service providers as needed
-
-	// Initialize the service container
-	containerInstance := container.GetContainer(app)
-
-	srv := server.NewServer(app)
-	route := routes.NewRoutesApp(srv, containerInstance)
-	route.RegisterRoute()
+	provider := Providers.RouteServiceProvider{}
+	provider.ResisterRoute(app.App)
 
 	go func() {
-		if err := srv.Run(":" + app.Config.App.Port); !errors.Is(err, http.ErrServerClosed) {
-			exceptions.PanicIfNeeded(fmt.Errorf("error occurred while running http server: %s\n", err.Error()))
+		if err := app.Run(":" + app.Config.App.Port); !errors.Is(err, http.ErrServerClosed) {
+			exceptions.PanicIfNeeded(fmt.Errorf("error occurred while running http server"))
 		}
 	}()
-
-	log.Printf("Server is running on port %s\n", app.Config.App.Port)
 
 	// Graceful Shutdown
 	quit := make(chan os.Signal, 1)
@@ -50,10 +37,15 @@ func main() {
 
 	const timeout = 5 * time.Second
 
+	log.Println("Server is shutting down...")
+
 	ctx, shutdown := context.WithTimeout(context.Background(), timeout)
 	defer shutdown()
 
-	if err := srv.ShutdownWithContext(ctx); err != nil {
+	if err := app.ShutdownWithContext(ctx); err != nil {
+		log.Printf("Failed to stop server: %v", err)
 		exceptions.PanicIfNeeded(fmt.Errorf("failed to stop server: %v", err))
+	} else {
+		log.Println("Server stopped gracefully")
 	}
 }

@@ -14,7 +14,7 @@ package main
 //
 //	flightService := flight.NewFlightService(client)
 //
-//	response, err := flightService.OfferSearch().
+//	models, err := flightService.OfferSearch().
 //		OriginLocationCode("DEL").
 //		DestinationLocationCode("LON").
 //		DepartureDate("2023-12-01").
@@ -29,7 +29,7 @@ package main
 //		return
 //	}
 //
-//	fmt.Println("=================Response:", response)
-//	offerPrice, err := flightService.OfferPrice().FlightOffers(response.Data[0]).Send()
+//	fmt.Println("=================Response:", models)
+//	offerPrice, err := flightService.OfferPrice().FlightOffers(models.Data[0]).Send()
 //	fmt.Println("=================offerPrice:", offerPrice)
 //}

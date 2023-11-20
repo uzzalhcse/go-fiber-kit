@@ -8,7 +8,7 @@ import (
 	"github.com/uzzalhcse/amadeus-go/bootstrap"
 )
 
-func SetUpApiRoutes(api fiber.Router) {
+func SetUpAuthRoutes(api fiber.Router) {
 	testRepo := Repositories.NewTestRepository(bootstrap.App().DB)
 	testService := Services.NewTestService(testRepo)
 	testController := Controllers.NewTestController(testService)

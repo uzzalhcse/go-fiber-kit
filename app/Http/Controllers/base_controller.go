@@ -2,18 +2,14 @@
 
 package Controllers
 
-import (
-	"github.com/uzzalhcse/amadeus-go/core/container"
-)
+import "github.com/uzzalhcse/amadeus-go/bootstrap"
 
-// BaseController defines a base controller with access to the service container
+// BaseController contains the application instance
 type BaseController struct {
-	*container.Container
+	*bootstrap.Application
 }
 
-// NewBaseController creates a new instance of the base controller
-func NewBaseController(container *container.Container) *BaseController {
-	return &BaseController{container}
+// NewBaseController initializes a new BaseController
+func NewBaseController() *BaseController {
+	return &BaseController{bootstrap.App()}
 }
-
-// Add any other common methods or properties you want to include in all controllers

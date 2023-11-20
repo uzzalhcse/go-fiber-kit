@@ -1,9 +1,12 @@
 package flight
 
-import "encoding/json"
+import (
+	"encoding/json"
+	"github.com/uzzalhcse/amadeus-go/pkg/amadeus/flight/models"
+)
 
 type SearchRequest struct {
-	service                 *Service
+	Service                 *Service
 	originLocationCode      string
 	destinationLocationCode string
 	departureDate           string
@@ -48,13 +51,13 @@ func (r *SearchRequest) Max(max string) *SearchRequest {
 	return r
 }
 
-func (r *SearchRequest) Get() (*FlightOfferData, error) {
-	err := r.service.client.GetAccessToken()
+func (r *SearchRequest) Get() (*models.FlightOfferData, error) {
+	err := r.Service.Client.GetAccessToken()
 	if err != nil {
 		return nil, err
 	}
 
-	resp, err := r.service.client.Client.R().
+	resp, err := r.Service.Client.Client.R().
 		SetQueryParams(map[string]string{
 			"originLocationCode":      r.originLocationCode,
 			"destinationLocationCode": r.destinationLocationCode,
@@ -64,13 +67,13 @@ func (r *SearchRequest) Get() (*FlightOfferData, error) {
 			"includedAirlineCodes":    r.includedAirlineCodes,
 			"max":                     r.max,
 		}).
-		SetHeader("Authorization", "Bearer "+r.service.client.AccessToken).
+		SetHeader("Authorization", "Bearer "+r.Service.Client.AccessToken).
 		Get("https://test.api.amadeus.com/v2/shopping/flight-offers")
 
 	if err != nil {
 		return nil, err
 	}
-	var flightOfferData FlightOfferData
+	var flightOfferData models.FlightOfferData
 	if err := json.Unmarshal(resp.Body(), &flightOfferData); err != nil {
 		return nil, err
 	}

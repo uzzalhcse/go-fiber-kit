@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/uzzalhcse/amadeus-go/app/exceptions"
 	"github.com/uzzalhcse/amadeus-go/config"
+	"github.com/uzzalhcse/amadeus-go/database"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -30,6 +31,13 @@ func NewDatabase(dbConfig config.DatabaseConfig) (DB *gorm.DB) {
 	DB, err = createConnectionPool(connString)
 	if err != nil {
 		exceptions.PanicIfNeeded(fmt.Errorf("[INIT] failed to connect to the database: %v", err))
+	}
+
+	fmt.Println("[INIT] Database connection established")
+
+	err = database.Migrate(DB)
+	if err != nil {
+		fmt.Println("DB Migration Error: ", err.Error())
 	}
 
 	return DB

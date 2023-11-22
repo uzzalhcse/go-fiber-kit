@@ -30,11 +30,22 @@ func App() *Application {
 
 // ConnectDB lazily connects to the database if not already connected
 func (app *Application) ConnectDB() {
+	if app.DB == nil {
+		app.DB = NewDatabase(app.Config.Database)
+	}
+}
+
+// ConnectDBAsync lazily connects to the database if not already connected
+func (app *Application) ConnectDBAsync() {
 	go func() {
 		if app.DB == nil {
 			app.DB = NewDatabase(app.Config.Database)
 		}
 	}()
+}
+
+func (app *Application) GetDB() *gorm.DB {
+	return app.DB
 }
 func (app *Application) CloseDBConnection() {
 	CloseDBConnection(app.DB)

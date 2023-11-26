@@ -5,6 +5,7 @@ package Controllers
 import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/uzzalhcse/amadeus-go/app/Http/Requests"
+	"github.com/uzzalhcse/amadeus-go/app/Http/Requests/auth"
 	"github.com/uzzalhcse/amadeus-go/app/Http/Responses"
 	"github.com/uzzalhcse/amadeus-go/app/Models"
 	"github.com/uzzalhcse/amadeus-go/app/Repositories"
@@ -33,7 +34,7 @@ func NewAuthController() *AuthController {
 
 // Login handles the login route
 func (that *AuthController) Login(c *fiber.Ctx) error {
-	var request Requests.LoginRequest
+	var request auth.LoginRequest
 
 	if err := Requests.Validate(c, &request); err != nil {
 		return Responses.Error(c, err.Error(), nil)
@@ -65,7 +66,7 @@ func (that *AuthController) Login(c *fiber.Ctx) error {
 
 // Register handles the registration route
 func (that *AuthController) Register(c *fiber.Ctx) error {
-	var request Requests.RegisterRequest
+	var request auth.RegisterRequest
 
 	if err := Requests.Validate(c, &request); err != nil {
 		return Responses.Error(c, err.Error(), nil)
@@ -88,7 +89,7 @@ func (that *AuthController) Register(c *fiber.Ctx) error {
 
 // UpdateProfile handles the update profile route
 func (that *AuthController) UpdateProfile(c *fiber.Ctx) error {
-	var request Requests.UpdateProfileRequest
+	var request auth.UpdateProfileRequest
 
 	if err := Requests.Validate(c, &request); err != nil {
 		return Responses.Error(c, err.Error(), nil)
@@ -110,7 +111,7 @@ func (that *AuthController) UpdateProfile(c *fiber.Ctx) error {
 
 // ForgetPasswordHandler handles the forget password route
 func (that *AuthController) ForgetPassword(c *fiber.Ctx) error {
-	var request Requests.ForgetPasswordRequest
+	var request auth.ForgetPasswordRequest
 
 	if err := Requests.Validate(c, &request); err != nil {
 		return Responses.Error(c, err.Error(), nil)
@@ -127,4 +128,8 @@ func (that *AuthController) ForgetPassword(c *fiber.Ctx) error {
 	// Send resetToken to the user (e.g., via email)
 
 	return Responses.Success(c, fiber.Map{"message": "Password reset initiated"})
+}
+func (that *AuthController) Me(c *fiber.Ctx) error {
+	user := c.Locals("user").(*Models.User)
+	return Responses.Success(c, fiber.Map{"message": "Profile updated successfully", "user": user})
 }

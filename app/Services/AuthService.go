@@ -10,5 +10,4 @@ type AuthService interface {
 	Register(user *Models.User) error
 	UpdateProfile(username string, updatedUser *Models.User) error
 	ForgetPassword(username string) (string, error)
-	// Add other authentication-related methods as needed
 }

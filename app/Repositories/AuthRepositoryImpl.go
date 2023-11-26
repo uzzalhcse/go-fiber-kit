@@ -53,3 +53,10 @@ func (r *AuthRepositoryImpl) UpdateUser(username string, updatedUser *Models.Use
 
 	return nil
 }
+func (r *AuthRepositoryImpl) FindUserByID(userID string) (*Models.User, error) {
+	var user Models.User
+	if err := r.DB.Where("id = ?", userID).First(&user).Error; err != nil {
+		return nil, err
+	}
+	return &user, nil
+}

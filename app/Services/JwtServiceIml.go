@@ -3,6 +3,7 @@ package Services
 import (
 	"github.com/dgrijalva/jwt-go"
 	"github.com/uzzalhcse/amadeus-go/app/Models"
+	"strconv"
 	"time"
 )
 
@@ -16,10 +17,11 @@ func NewJWTService(secretKey string) *JWTServiceImpl {
 
 func (s *JWTServiceImpl) GenerateToken(user *Models.User) (string, error) {
 	claims := jwt.MapClaims{
-		"sub":   user.ID,
-		"iss":   "your-issuer",                         // Replace with your desired issuer
+		"sub":   strconv.Itoa(int(user.ID)),
+		"iss":   "my-app",                              // Replace with your desired issuer
 		"exp":   time.Now().Add(time.Hour * 24).Unix(), // Token expiration time (adjust as needed)
 		"iat":   time.Now().Unix(),
+		"name":  user.Name,
 		"email": user.Email,
 		// Add other custom claims as needed
 	}

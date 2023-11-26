@@ -1,6 +1,6 @@
 // Http/Requests/register_request.go
 
-package Requests
+package auth
 
 type RegisterRequest struct {
 	Name     string `json:"name" validate:"required"`

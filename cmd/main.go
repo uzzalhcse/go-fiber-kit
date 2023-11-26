@@ -21,7 +21,7 @@ func main() {
 	app.ConnectDB()
 
 	provider := Providers.RouteServiceProvider{}
-	provider.ResisterRoute(app.App)
+	provider.Resister(app.App)
 
 	go func() {
 		if err := app.Run(":" + app.Config.App.Port); !errors.Is(err, http.ErrServerClosed) {

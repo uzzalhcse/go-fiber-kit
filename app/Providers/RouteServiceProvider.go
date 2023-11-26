@@ -9,7 +9,7 @@ type RouteServiceProvider struct {
 	*ServiceProvider
 }
 
-func (provider *RouteServiceProvider) ResisterRoute(router fiber.Router) {
+func (provider *RouteServiceProvider) Resister(router fiber.Router) {
 	web := router.Group("")
 	routes.SetUpWebRoutes(web)
 

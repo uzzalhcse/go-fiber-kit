@@ -1,3 +1,4 @@
+// amd/flight/models/flight_offer_data.go
 package models
 
 type FlightOfferData struct {

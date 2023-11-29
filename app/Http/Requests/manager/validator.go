@@ -1,6 +1,4 @@
-// requests/validator.go
-
-package Requests
+package manager
 
 import (
 	"fmt"
@@ -16,13 +14,8 @@ func init() {
 	validate = validator.New()
 }
 
-// Validate validates a request using the go-playground validator
-func Validate(c *fiber.Ctx, req interface{}) error {
-	// Parse the request body
-	if err := c.BodyParser(req); err != nil {
-		return err
-	}
-
+// Validate validates a parsed request using the go-playground validator
+func Validate(req interface{}) error {
 	// Validate the request using the initialized validator
 	if err := validate.Struct(req); err != nil {
 		// If validation fails, construct a human-readable error message
@@ -41,8 +34,6 @@ func Validate(c *fiber.Ctx, req interface{}) error {
 				validationErrors = append(validationErrors, fmt.Sprintf("%s must be at least %s characters", fieldName, errorMessage))
 			case "max":
 				validationErrors = append(validationErrors, fmt.Sprintf("%s cannot be longer than %s characters", fieldName, errorMessage))
-			case "email":
-				validationErrors = append(validationErrors, fmt.Sprintf("%s must be a valid email address", fieldName))
 			default:
 				validationErrors = append(validationErrors, fmt.Sprintf("%s is not valid", fieldName))
 			}

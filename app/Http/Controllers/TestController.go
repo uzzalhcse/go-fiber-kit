@@ -4,31 +4,28 @@ import (
 	"fmt"
 	"github.com/gofiber/fiber/v2"
 	"github.com/uzzalhcse/amadeus-go/app/Services"
-	"github.com/uzzalhcse/amadeus-go/pkg/amadeus"
-	"github.com/uzzalhcse/amadeus-go/pkg/amadeus/flight"
+	"github.com/uzzalhcse/amadeus-go/pkg/amadeus-go"
 )
 
 // TestController defines a controller for handling test-related requests
 type TestController struct {
 	*BaseController
 	TestService *Services.TestService
+	amadeus     *amadeus.Amadeus
 }
 
 // NewTestController creates a new instance of the test controller
 func NewTestController(testService *Services.TestService) *TestController {
+	that := NewBaseController()
 	return &TestController{
-		BaseController: NewBaseController(),
+		BaseController: that,
 		TestService:    testService,
+		amadeus:        amadeus.NewAmadeus(that.Config.Amadeus.APIKey, that.Config.Amadeus.APISecret),
 	}
 }
 
 func (that *TestController) Test(c *fiber.Ctx) error {
-	// Access configuration using the embedded Config instance
-	apiKey := that.Config.Amadeus.APIKey
-	apiSecret := that.Config.Amadeus.APISecret
-	client := amadeus.NewClient(apiKey, apiSecret)
-	flightService := flight.NewFlightService(client)
-	response, err := flightService.OfferSearch().
+	response, err := that.amadeus.FlightService.OfferSearchRequest.
 		OriginLocationCode("DEL").
 		DestinationLocationCode("LON").
 		DepartureDate("2023-12-01").

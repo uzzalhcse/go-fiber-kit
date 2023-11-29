@@ -1,6 +1,6 @@
 // Http/Requests/forget_password_request.go
 
-package auth
+package requests
 
 type ForgetPasswordRequest struct {
 	// Add fields for initiating forget password process

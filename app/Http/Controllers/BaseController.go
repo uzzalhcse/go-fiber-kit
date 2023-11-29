@@ -1,4 +1,4 @@
-// controllers/base_controller.go
+// controllers/BaseController.go
 
 package Controllers
 

@@ -4,8 +4,8 @@ package Controllers
 
 import (
 	"github.com/gofiber/fiber/v2"
-	"github.com/uzzalhcse/amadeus-go/app/Http/Requests"
-	"github.com/uzzalhcse/amadeus-go/app/Http/Requests/auth"
+	requests "github.com/uzzalhcse/amadeus-go/app/Http/Requests/auth"
+	"github.com/uzzalhcse/amadeus-go/app/Http/Requests/manager"
 	"github.com/uzzalhcse/amadeus-go/app/Http/Responses"
 	"github.com/uzzalhcse/amadeus-go/app/Models"
 	"github.com/uzzalhcse/amadeus-go/app/Repositories"
@@ -34,9 +34,15 @@ func NewAuthController() *AuthController {
 
 // Login handles the login route
 func (that *AuthController) Login(c *fiber.Ctx) error {
-	var request auth.LoginRequest
+	var request requests.LoginRequest
 
-	if err := Requests.Validate(c, &request); err != nil {
+	// Parse the request body
+	if err := c.BodyParser(&request); err != nil {
+		return Responses.Error(c, err.Error(), nil)
+	}
+
+	// Validate the request
+	if err := manager.Validate(&request); err != nil {
 		return Responses.Error(c, err.Error(), nil)
 	}
 
@@ -66,9 +72,12 @@ func (that *AuthController) Login(c *fiber.Ctx) error {
 
 // Register handles the registration route
 func (that *AuthController) Register(c *fiber.Ctx) error {
-	var request auth.RegisterRequest
-
-	if err := Requests.Validate(c, &request); err != nil {
+	var request requests.RegisterRequest
+	// Parse the request body
+	if err := c.BodyParser(&request); err != nil {
+		return Responses.Error(c, err.Error(), nil)
+	}
+	if err := manager.Validate(&request); err != nil {
 		return Responses.Error(c, err.Error(), nil)
 	}
 
@@ -89,9 +98,12 @@ func (that *AuthController) Register(c *fiber.Ctx) error {
 
 // UpdateProfile handles the update profile route
 func (that *AuthController) UpdateProfile(c *fiber.Ctx) error {
-	var request auth.UpdateProfileRequest
-
-	if err := Requests.Validate(c, &request); err != nil {
+	var request requests.UpdateProfileRequest
+	// Parse the request body
+	if err := c.BodyParser(&request); err != nil {
+		return Responses.Error(c, err.Error(), nil)
+	}
+	if err := manager.Validate(&request); err != nil {
 		return Responses.Error(c, err.Error(), nil)
 	}
 
@@ -111,9 +123,12 @@ func (that *AuthController) UpdateProfile(c *fiber.Ctx) error {
 
 // ForgetPasswordHandler handles the forget password route
 func (that *AuthController) ForgetPassword(c *fiber.Ctx) error {
-	var request auth.ForgetPasswordRequest
-
-	if err := Requests.Validate(c, &request); err != nil {
+	var request requests.ForgetPasswordRequest
+	// Parse the request body
+	if err := c.BodyParser(&request); err != nil {
+		return Responses.Error(c, err.Error(), nil)
+	}
+	if err := manager.Validate(&request); err != nil {
 		return Responses.Error(c, err.Error(), nil)
 	}
 

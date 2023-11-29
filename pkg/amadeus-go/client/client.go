@@ -1,11 +1,12 @@
-// amadeus/client.go
-package amadeus
+// amd/client/client.go
+package client
 
 import (
 	"encoding/json"
-	"github.com/go-resty/resty/v2"
 	"sync"
 	"time"
+
+	"github.com/go-resty/resty/v2"
 )
 
 type Client struct {

@@ -1,4 +1,4 @@
-package Providers
+package providers
 
 type ServiceProvider struct {
 }

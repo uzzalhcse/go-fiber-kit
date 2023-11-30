@@ -4,8 +4,8 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/uzzalhcse/amadeus-go/app/Providers"
 	"github.com/uzzalhcse/amadeus-go/app/exceptions"
+	"github.com/uzzalhcse/amadeus-go/app/providers"
 	"github.com/uzzalhcse/amadeus-go/bootstrap"
 	"log"
 	"net/http"
@@ -20,7 +20,7 @@ func main() {
 	defer app.CloseDBConnection()
 	app.ConnectDB()
 
-	provider := Providers.RouteServiceProvider{}
+	provider := providers.RouteServiceProvider{}
 	provider.Resister(app.App)
 
 	go func() {

@@ -1,4 +1,4 @@
-package Providers
+package providers
 
 import (
 	"github.com/gofiber/fiber/v2"

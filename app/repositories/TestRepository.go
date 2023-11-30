@@ -1,7 +1,7 @@
-package Repositories
+package repositories
 
 import (
-	"github.com/uzzalhcse/amadeus-go/app/Models"
+	"github.com/uzzalhcse/amadeus-go/app/models"
 	"gorm.io/gorm"
 )
 
@@ -14,8 +14,8 @@ func NewTestRepository(db *gorm.DB) *TestRepository {
 }
 
 // GetAll returns all records from the model
-func (r *TestRepository) GetAll() ([]Models.TestModel, error) {
-	var models []Models.TestModel
+func (r *TestRepository) GetAll() ([]models.TestModel, error) {
+	var models []models.TestModel
 	if err := r.DB.Find(&models).Error; err != nil {
 		return nil, err
 	}

@@ -1,21 +1,21 @@
-package Controllers
+package controllers
 
 import (
 	"fmt"
 	"github.com/gofiber/fiber/v2"
-	"github.com/uzzalhcse/amadeus-go/app/Services"
+	"github.com/uzzalhcse/amadeus-go/app/services"
 	"github.com/uzzalhcse/amadeus-go/pkg/amadeus-go"
 )
 
 // TestController defines a controller for handling test-related requests
 type TestController struct {
 	*BaseController
-	TestService *Services.TestService
+	TestService *services.TestService
 	amadeus     *amadeus.Amadeus
 }
 
 // NewTestController creates a new instance of the test controller
-func NewTestController(testService *Services.TestService) *TestController {
+func NewTestController(testService *services.TestService) *TestController {
 	that := NewBaseController()
 	return &TestController{
 		BaseController: that,

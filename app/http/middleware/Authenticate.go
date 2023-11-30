@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gofiber/fiber/v2"
-	"github.com/uzzalhcse/amadeus-go/app/Models"
+	"github.com/uzzalhcse/amadeus-go/app/models"
 	"github.com/uzzalhcse/amadeus-go/bootstrap"
 	"strconv"
 )
@@ -38,7 +38,7 @@ func Auth() fiber.Handler {
 }
 
 // verifyToken verifies the JWT token and returns the user claims
-func verifyToken(tokenString string) (*Models.User, error) {
+func verifyToken(tokenString string) (*models.User, error) {
 	// Parse the token
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 		// Check the signing method
@@ -66,7 +66,7 @@ func verifyToken(tokenString string) (*Models.User, error) {
 	if err != nil {
 		return nil, fmt.Errorf("Error converting user ID to int: %v", err)
 	}
-	return &Models.User{
+	return &models.User{
 		ID:    uint(userID), // Convert to uint
 		Name:  getStringClaim(claims, "name"),
 		Email: getStringClaim(claims, "email"),

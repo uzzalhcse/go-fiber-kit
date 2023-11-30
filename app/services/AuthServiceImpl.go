@@ -1,18 +1,18 @@
 // app/Services/auth_service_impl.go
 
-package Services
+package services
 
 import (
-	"github.com/uzzalhcse/amadeus-go/app/Models"
-	"github.com/uzzalhcse/amadeus-go/app/Repositories"
+	"github.com/uzzalhcse/amadeus-go/app/models"
+	"github.com/uzzalhcse/amadeus-go/app/repositories"
 	"golang.org/x/crypto/bcrypt"
 )
 
 type AuthServiceImpl struct {
-	AuthRepo Repositories.AuthRepository
+	AuthRepo repositories.AuthRepository
 }
 
-func NewAuthService(authRepo Repositories.AuthRepository) *AuthServiceImpl {
+func NewAuthService(authRepo repositories.AuthRepository) *AuthServiceImpl {
 	return &AuthServiceImpl{AuthRepo: authRepo}
 }
 
@@ -31,11 +31,11 @@ func (s *AuthServiceImpl) Authenticate(username, password string) (bool, error) 
 	return true, nil // Authentication successful
 }
 
-func (s *AuthServiceImpl) GetUserByUsername(username string) (*Models.User, error) {
+func (s *AuthServiceImpl) GetUserByUsername(username string) (*models.User, error) {
 	return s.AuthRepo.FindUserByUsername(username)
 }
 
-func (s *AuthServiceImpl) Register(user *Models.User) error {
+func (s *AuthServiceImpl) Register(user *models.User) error {
 	// Hash the user's password before storing it in the database
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
 	if err != nil {
@@ -49,7 +49,7 @@ func (s *AuthServiceImpl) Register(user *Models.User) error {
 	return s.AuthRepo.CreateUser(user)
 }
 
-func (s *AuthServiceImpl) UpdateProfile(username string, updatedUser *Models.User) error {
+func (s *AuthServiceImpl) UpdateProfile(username string, updatedUser *models.User) error {
 	// Implement logic to update user profile in the database
 	return s.AuthRepo.UpdateUser(username, updatedUser)
 }

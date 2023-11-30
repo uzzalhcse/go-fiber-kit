@@ -2,18 +2,18 @@ package auth
 
 import (
 	"github.com/gofiber/fiber/v2"
-	"github.com/uzzalhcse/amadeus-go/app/Models"
+	"github.com/uzzalhcse/amadeus-go/app/models"
 )
 
 type Auth struct {
-	user *Models.User
+	user *models.User
 	ctx  *fiber.Ctx
 }
 
-func NewAuth(c *fiber.Ctx, user *Models.User) *Auth {
+func NewAuth(c *fiber.Ctx, user *models.User) *Auth {
 	return &Auth{ctx: c, user: user}
 }
 
-func (that *Auth) User() *Models.User {
+func (that *Auth) User() *models.User {
 	return that.user
 }

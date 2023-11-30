@@ -1,8 +1,8 @@
-package Services
+package services
 
 import (
 	"github.com/dgrijalva/jwt-go"
-	"github.com/uzzalhcse/amadeus-go/app/Models"
+	"github.com/uzzalhcse/amadeus-go/app/models"
 	"strconv"
 	"time"
 )
@@ -15,7 +15,7 @@ func NewJWTService(secretKey string) *JWTServiceImpl {
 	return &JWTServiceImpl{SecretKey: secretKey}
 }
 
-func (s *JWTServiceImpl) GenerateToken(user *Models.User) (string, error) {
+func (s *JWTServiceImpl) GenerateToken(user *models.User) (string, error) {
 	claims := jwt.MapClaims{
 		"sub":   strconv.Itoa(int(user.ID)),
 		"iss":   "my-app",                              // Replace with your desired issuer

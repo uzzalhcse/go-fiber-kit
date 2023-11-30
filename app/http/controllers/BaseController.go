@@ -1,6 +1,6 @@
 // controllers/BaseController.go
 
-package Controllers
+package controllers
 
 import "github.com/uzzalhcse/amadeus-go/bootstrap"
 

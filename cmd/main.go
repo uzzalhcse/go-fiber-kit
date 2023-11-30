@@ -1,18 +1,10 @@
 package main
 
 import (
-	"context"
-	"errors"
 	"fmt"
 	"github.com/uzzalhcse/amadeus-go/app/exceptions"
-	"github.com/uzzalhcse/amadeus-go/app/providers"
 	"github.com/uzzalhcse/amadeus-go/bootstrap"
-	"log"
-	"net/http"
-	"os"
-	"os/signal"
-	"syscall"
-	"time"
+	"github.com/uzzalhcse/amadeus-go/routes"
 )
 
 func main() {
@@ -20,32 +12,28 @@ func main() {
 	defer app.CloseDBConnection()
 	app.ConnectDB()
 
-	provider := providers.RouteServiceProvider{}
-	provider.Resister(app.App)
+	// Register routes
+	routes.RegisterRoutes(app.App)
 
-	go func() {
-		if err := app.Run(":" + app.Config.App.Port); !errors.Is(err, http.ErrServerClosed) {
-			exceptions.PanicIfNeeded(fmt.Errorf("error occurred while running http server"))
-		}
-	}()
+	// Launch the application in a goroutine
+	go startApplication(app)
 
-	// Graceful Shutdown
-	quit := make(chan os.Signal, 1)
-	signal.Notify(quit, syscall.SIGTERM, syscall.SIGINT)
-
-	<-quit
-
-	const timeout = 5 * time.Second
-
-	log.Println("Server is shutting down...")
-
-	ctx, shutdown := context.WithTimeout(context.Background(), timeout)
-	defer shutdown()
-
-	if err := app.ShutdownWithContext(ctx); err != nil {
-		log.Printf("Failed to stop server: %v", err)
-		exceptions.PanicIfNeeded(fmt.Errorf("failed to stop server: %v", err))
-	} else {
-		log.Println("Server stopped gracefully")
+	// Graceful shutdown
+	app.GracefulShutdown(func() {
+		shutdownApplication(app)
+	})
+}
+func startApplication(app *bootstrap.Application) {
+	port := ":" + app.Config.App.Port
+	if err := app.Run(port); err != nil {
+		exceptions.PanicIfNeeded(err.Error())
 	}
+}
+
+func shutdownApplication(app *bootstrap.Application) {
+	if err := app.Shutdown(); err != nil {
+		fmt.Println("Error during shutdown:", err.Error())
+	}
+
+	app.CloseDBConnection()
 }

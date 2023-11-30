@@ -2,7 +2,12 @@
 package bootstrap
 
 import (
+	"context"
+	"fmt"
+	"os"
+	"os/signal"
 	"sync"
+	"syscall"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/uzzalhcse/amadeus-go/config"
@@ -53,4 +58,33 @@ func (app *Application) CloseDBConnection() {
 
 func (app *Application) Run(port string) error {
 	return app.Listen(port)
+}
+
+func (app *Application) GracefulShutdown(cb func()) {
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	sigs := make(chan os.Signal, 1)
+	signal.Notify(sigs, syscall.SIGINT, syscall.SIGTERM)
+
+	go func() {
+		defer cancel() // Ensure cancellation when the goroutine exits
+
+		sig := <-sigs
+		fmt.Printf("Received %v signal. Initiating shutdown...\n", sig)
+	}()
+
+	// Wait for signal or context cancellation
+	select {
+	case <-sigs:
+		// Signal received, proceed with cleanup
+		fmt.Println("Shutting down gracefully...")
+	case <-ctx.Done():
+		// Context canceled, no need to handle the signal
+		fmt.Println("Shutdown initiated by the application. Performing cleanup...")
+	}
+
+	cb()
+
+	fmt.Println("Shutdown complete. Goodbye!")
 }

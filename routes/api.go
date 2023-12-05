@@ -14,5 +14,8 @@ func SetUpApiRoutes(api fiber.Router) {
 	testController := controllers.NewTestController(testService)
 	api.Get("/", testController.Test)
 	api.Get("/test", testController.GetAllHandler)
+	flight := api.Group("/flight")
 
+	flightController := controllers.NewFlightBookingController()
+	flight.Get("/offer-search", flightController.OfferSearch)
 }

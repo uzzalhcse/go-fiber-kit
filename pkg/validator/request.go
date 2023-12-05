@@ -27,7 +27,6 @@ func (m *Request) Validate(req interface{}) error {
 			fieldName := e.Field()
 			tagName := e.Tag()
 			errorMessage := e.Param()
-			fmt.Println(e)
 
 			// Customize error messages based on validation tags
 			switch tagName {
@@ -50,5 +49,21 @@ func (m *Request) Validate(req interface{}) error {
 	}
 
 	// If validation succeeds, return nil
+	return nil
+}
+
+// ParseAndValidate parses and validates a request
+func (m *Request) ParseAndValidate(c *fiber.Ctx, req interface{}) error {
+	// Check content type and parse accordingly
+	if err := c.BodyParser(req); err != nil {
+		return fiber.NewError(fiber.StatusBadRequest, err.Error())
+	}
+
+	// Validate the request
+	if err := m.Validate(req); err != nil {
+		return err
+	}
+
+	// Return nil if parsing and validation succeed
 	return nil
 }

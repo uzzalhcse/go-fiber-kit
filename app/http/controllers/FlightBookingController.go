@@ -3,8 +3,9 @@
 package controllers
 
 import (
-	"fmt"
 	"github.com/gofiber/fiber/v2"
+	flightrequests "github.com/uzzalhcse/amadeus-go/app/http/requests/flight"
+	"github.com/uzzalhcse/amadeus-go/app/http/responses"
 	"github.com/uzzalhcse/amadeus-go/pkg/amadeus-go"
 )
 
@@ -24,22 +25,25 @@ func NewFlightBookingController() *FlightBookingController {
 
 // OfferSearch handles the login route
 func (that *FlightBookingController) OfferSearch(c *fiber.Ctx) error {
+	var request flightrequests.FlightSearchRequest
+
+	// Validate the request
+	if err := request.ParseAndValidate(c, &request); err != nil {
+		return responses.Error(c, err.Error())
+	}
+
 	response, err := that.amadeus.FlightService.OfferSearchRequest.
-		OriginLocationCode("DEL").
-		DestinationLocationCode("LON").
-		DepartureDate("2023-12-01").
-		ReturnDate("2023-12-15").
-		Adult("2").
-		//Max("5").
-		//IncludedAirlineCodes("TG").
+		OriginLocationCode(request.OriginLocationCode).
+		DestinationLocationCode(request.DestinationLocationCode).
+		DepartureDate(request.DepartureDate).
+		ReturnDate(request.ReturnDate).
+		Adult(request.Adult).
+		Max(request.Max).
+		IncludedAirlineCodes(request.IncludedAirlineCodes).
 		Get()
 
 	if err != nil {
-		fmt.Println("Error:", err)
+		return responses.Error(c, err.Error())
 	}
-	return c.JSON(fiber.Map{
-		"message": "Hello World",
-		"status":  "Success",
-		"data":    response,
-	})
+	return responses.Success(c, response)
 }

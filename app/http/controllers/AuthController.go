@@ -37,29 +37,29 @@ func (that *AuthController) Login(c *fiber.Ctx) error {
 
 	// Parse the request body
 	if err := c.BodyParser(&request); err != nil {
-		return responses.Error(c, err.Error(), nil)
+		return responses.Error(c, err.Error())
 	}
 
 	// Validate the request
 	if err := request.Validate(&request); err != nil {
-		return responses.Error(c, err.Error(), nil)
+		return responses.Error(c, err.Error())
 	}
 
 	// Authenticate user
 	authenticated, err := that.AuthService.Authenticate(request.Username, request.Password)
 	if err != nil {
-		return responses.Error(c, "Authentication failed", nil)
+		return responses.Error(c, "Authentication failed")
 	}
 
 	if !authenticated {
-		return responses.Error(c, "Invalid credentials", nil)
+		return responses.Error(c, "Invalid credentials")
 	}
 
 	// Generate JWT token
 	user, _ := that.AuthService.GetUserByUsername(request.Username) // Assuming you have a GetUserByUsername method
 	token, err := that.JWTService.GenerateToken(user)
 	if err != nil {
-		return responses.Error(c, "Failed to generate token", nil)
+		return responses.Error(c, "Failed to generate token")
 	}
 
 	// Send JWT token in the response
@@ -74,10 +74,10 @@ func (that *AuthController) Register(c *fiber.Ctx) error {
 	var request authrequests.RegisterRequest
 	// Parse the request body
 	if err := c.BodyParser(&request); err != nil {
-		return responses.Error(c, err.Error(), nil)
+		return responses.Error(c, err.Error())
 	}
 	if err := request.Validate(&request); err != nil {
-		return responses.Error(c, err.Error(), nil)
+		return responses.Error(c, err.Error())
 	}
 
 	user := &models.User{
@@ -89,7 +89,7 @@ func (that *AuthController) Register(c *fiber.Ctx) error {
 	}
 
 	if err := that.AuthService.Register(user); err != nil {
-		return responses.Error(c, "Registration failed", nil)
+		return responses.Error(c, "Registration failed")
 	}
 
 	return responses.Success(c, fiber.Map{"message": "Registration successful"})
@@ -100,10 +100,10 @@ func (that *AuthController) UpdateProfile(c *fiber.Ctx) error {
 	var request authrequests.UpdateProfileRequest
 	// Parse the request body
 	if err := c.BodyParser(&request); err != nil {
-		return responses.Error(c, err.Error(), nil)
+		return responses.Error(c, err.Error())
 	}
 	if err := request.Validate(&request); err != nil {
-		return responses.Error(c, err.Error(), nil)
+		return responses.Error(c, err.Error())
 	}
 
 	// Assuming you have a way to identify the current user (e.g., from the JWT token)
@@ -114,7 +114,7 @@ func (that *AuthController) UpdateProfile(c *fiber.Ctx) error {
 	}
 
 	if err := that.AuthService.UpdateProfile(username, updatedUser); err != nil {
-		return responses.Error(c, "Profile update failed", nil)
+		return responses.Error(c, "Profile update failed")
 	}
 
 	return responses.Success(c, fiber.Map{"message": "Profile updated successfully"})
@@ -125,10 +125,10 @@ func (that *AuthController) ForgetPassword(c *fiber.Ctx) error {
 	var request authrequests.ForgetPasswordRequest
 	// Parse the request body
 	if err := c.BodyParser(&request); err != nil {
-		return responses.Error(c, err.Error(), nil)
+		return responses.Error(c, err.Error())
 	}
 	if err := request.Validate(&request); err != nil {
-		return responses.Error(c, err.Error(), nil)
+		return responses.Error(c, err.Error())
 	}
 
 	// Assuming you have a way to identify the current user (e.g., from the JWT token)
@@ -136,7 +136,7 @@ func (that *AuthController) ForgetPassword(c *fiber.Ctx) error {
 
 	resetToken, err := that.AuthService.ForgetPassword(username)
 	if err != nil {
-		return responses.Error(c, "Failed to initiate password reset", nil)
+		return responses.Error(c, "Failed to initiate password reset")
 	}
 	log.Println(resetToken)
 	// Send resetToken to the user (e.g., via email)

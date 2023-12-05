@@ -29,8 +29,8 @@ func (that *TestController) Test(c *fiber.Ctx) error {
 		OriginLocationCode("DEL").
 		DestinationLocationCode("LON").
 		DepartureDate("2023-12-01").
-		ReturnDate("2023-12-05").
-		Adult("2").
+		ReturnDate("2023-12-09").
+		Adult("1").
 		Max("5").
 		IncludedAirlineCodes("TG").
 		Get()

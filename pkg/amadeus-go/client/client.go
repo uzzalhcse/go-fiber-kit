@@ -9,6 +9,8 @@ import (
 	"github.com/go-resty/resty/v2"
 )
 
+const BaseUrl = "https://test.api.amadeus.com"
+
 type Client struct {
 	apiKey      string
 	apiSecret   string
@@ -16,6 +18,7 @@ type Client struct {
 	expiresAt   int64
 	Client      *resty.Client
 	mu          sync.Mutex
+	BaseUrl     string
 }
 
 func NewClient(apiKey, apiSecret string) *Client {
@@ -23,6 +26,7 @@ func NewClient(apiKey, apiSecret string) *Client {
 		apiKey:    apiKey,
 		apiSecret: apiSecret,
 		Client:    resty.New(),
+		BaseUrl:   BaseUrl,
 	}
 }
 

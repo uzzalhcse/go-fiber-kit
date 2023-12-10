@@ -37,7 +37,7 @@ func (r *PricingRequest) Send() (string, error) {
 		SetBody(requestBody).
 		SetHeader("Content-Type", "application/json").
 		SetHeader("Authorization", "Bearer "+r.Service.AccessToken).
-		Post("https://test.api.amadeus.com/v1/shopping/flight-offers/pricing")
+		Post(r.Service.BaseUrl + "/v1/shopping/flight-offers/pricing")
 
 	if err != nil {
 		return "", err

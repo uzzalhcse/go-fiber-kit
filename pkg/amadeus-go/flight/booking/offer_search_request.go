@@ -128,7 +128,7 @@ func (r *OfferSearchRequest) GetRaw() (interface{}, error) {
 			"max":                     r.max,
 		}).
 		SetHeader("Authorization", "Bearer "+r.Service.AccessToken).
-		Get("https://test.api.amadeus.com/v2/shopping/flight-offers")
+		Get(r.Service.BaseUrl + "/v2/shopping/flight-offers")
 
 	if err != nil {
 		return nil, err

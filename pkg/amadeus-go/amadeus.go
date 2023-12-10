@@ -3,6 +3,7 @@ package amadeus
 import (
 	"github.com/uzzalhcse/amadeus-go/pkg/amadeus-go/client"
 	"github.com/uzzalhcse/amadeus-go/pkg/amadeus-go/flight/booking"
+	"github.com/uzzalhcse/amadeus-go/pkg/amadeus-go/flight/flightairport"
 )
 
 type Amadeus struct {
@@ -17,6 +18,7 @@ func NewAmadeus(apiKey, apiSecret string) *Amadeus {
 		FlightService: &FlightService{
 			OfferSearchRequest: booking.NewOfferSearchRequest(c),
 			PricingRequest:     booking.NewPricingRequest(c),
+			SearchAirports:     flightairport.NewSearchRequest(c),
 		},
 	}
 }

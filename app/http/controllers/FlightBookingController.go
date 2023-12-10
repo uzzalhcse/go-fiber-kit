@@ -47,3 +47,16 @@ func (that *FlightBookingController) OfferSearch(c *fiber.Ctx) error {
 	}
 	return responses.Success(c, response)
 }
+
+func (that *FlightBookingController) Airports(c *fiber.Ctx) error {
+	response, err := that.amadeus.FlightService.SearchAirports.
+		CountryCode(c.Query("countryCode")).
+		SubType(c.Query("subType")).
+		Keyword(c.Query("keyword")).
+		Get()
+
+	if err != nil {
+		return responses.Error(c, err.Error())
+	}
+	return responses.Success(c, response)
+}

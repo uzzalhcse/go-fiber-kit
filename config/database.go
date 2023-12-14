@@ -16,6 +16,6 @@ func loadDBConfig() DatabaseConfig {
 		Password: viper.GetString("DB_PASSWORD"),
 		Host:     viper.GetString("DB_HOST"),
 		Port:     viper.GetString("DB_PORT"),
-		Name:     viper.GetString("DB_NAME"),
+		Name:     viper.GetString("DB_DATABASE"),
 	}
 }

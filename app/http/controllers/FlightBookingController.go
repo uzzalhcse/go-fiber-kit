@@ -45,7 +45,9 @@ func (that *FlightBookingController) OfferSearch(c *fiber.Ctx) error {
 	if err != nil {
 		return responses.Error(c, err.Error())
 	}
-	return responses.Success(c, response)
+	return responses.Success(c, "Offer Search items", fiber.Map{
+		"items": response.Data,
+	})
 }
 
 func (that *FlightBookingController) Airports(c *fiber.Ctx) error {
@@ -58,5 +60,7 @@ func (that *FlightBookingController) Airports(c *fiber.Ctx) error {
 	if err != nil {
 		return responses.Error(c, err.Error())
 	}
-	return responses.Success(c, response)
+	return responses.Success(c, "Airport List", fiber.Map{
+		"items": response,
+	})
 }

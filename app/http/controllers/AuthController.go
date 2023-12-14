@@ -63,9 +63,8 @@ func (that *AuthController) Login(c *fiber.Ctx) error {
 	}
 
 	// Send JWT token in the response
-	return responses.Success(c, fiber.Map{
-		"message": "Login successful",
-		"token":   token,
+	return responses.Success(c, "Login successful", fiber.Map{
+		"token": token,
 	})
 }
 
@@ -92,7 +91,7 @@ func (that *AuthController) Register(c *fiber.Ctx) error {
 		return responses.Error(c, "Registration failed")
 	}
 
-	return responses.Success(c, fiber.Map{"message": "Registration successful"})
+	return responses.Success(c, "Registration successful", nil)
 }
 
 // UpdateProfile handles the update profile route
@@ -117,7 +116,7 @@ func (that *AuthController) UpdateProfile(c *fiber.Ctx) error {
 		return responses.Error(c, "Profile update failed")
 	}
 
-	return responses.Success(c, fiber.Map{"message": "Profile updated successfully"})
+	return responses.Success(c, "Profile updated successfully", nil)
 }
 
 // ForgetPasswordHandler handles the forget password route
@@ -141,9 +140,11 @@ func (that *AuthController) ForgetPassword(c *fiber.Ctx) error {
 	log.Println(resetToken)
 	// Send resetToken to the user (e.g., via email)
 
-	return responses.Success(c, fiber.Map{"message": "Password reset initiated"})
+	return responses.Success(c, "Password reset initiated", nil)
 }
 func (that *AuthController) Me(c *fiber.Ctx) error {
 	user := c.Locals("user").(*models.User)
-	return responses.Success(c, fiber.Map{"message": "Profile updated successfully", "user": user})
+	return responses.Success(c, "Profile updated successfully", fiber.Map{
+		"user": user,
+	})
 }

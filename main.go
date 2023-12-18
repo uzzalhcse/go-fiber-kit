@@ -14,7 +14,6 @@ func main() {
 
 	// Register routes
 	routes.RegisterRoutes(app.App)
-
 	// Launch the application in a goroutine
 	go startApplication(app)
 

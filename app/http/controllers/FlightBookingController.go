@@ -50,6 +50,27 @@ func (that *FlightBookingController) OfferSearch(c *fiber.Ctx) error {
 	})
 }
 
+// OfferPrice handles the login route
+func (that *FlightBookingController) OfferPrice(c *fiber.Ctx) error {
+	var request flightrequests.PriceSearchRequest
+
+	// Validate the request
+	if err := request.ParseAndValidate(c, &request); err != nil {
+		return responses.Error(c, err.Error())
+	}
+
+	response, err := that.amadeus.FlightService.PricingRequest.
+		FlightOffers(request.FlightOfferData).
+		Send()
+
+	if err != nil {
+		return responses.Error(c, err.Error())
+	}
+	return responses.Success(c, "Offer Search items", fiber.Map{
+		"items": response,
+	})
+}
+
 func (that *FlightBookingController) Airports(c *fiber.Ctx) error {
 	response, err := that.amadeus.FlightService.SearchAirports.
 		CountryCode(c.Query("countryCode")).

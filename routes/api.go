@@ -18,6 +18,6 @@ func SetUpApiRoutes(api fiber.Router) {
 	flight := api.Group("/flight")
 	flightController := controllers.NewFlightBookingController()
 	flight.Post("/offer-search", flightController.OfferSearch)
-	flight.Post("/offer-price", flightController.OfferSearch)
+	flight.Post("/offer-price", flightController.OfferPrice)
 	flight.Get("/airports", flightController.Airports)
 }

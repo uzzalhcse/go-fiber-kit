@@ -19,6 +19,7 @@ func NewAmadeus(apiKey, apiSecret string) *Amadeus {
 			OfferSearchRequest: booking.NewOfferSearchRequest(c),
 			PricingRequest:     booking.NewPricingRequest(c),
 			SearchAirports:     flightairport.NewSearchRequest(c),
+			CreateOrder:        booking.NewCreateOrderRequest(c),
 		},
 	}
 }

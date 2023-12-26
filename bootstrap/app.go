@@ -29,6 +29,7 @@ func App() *Application {
 	Once.Do(func() {
 		AppInstance = &Application{fiber.New(), nil, config.NewConfig()}
 	})
+	AppInstance = &Application{fiber.New(), nil, config.NewConfig()}
 
 	return AppInstance
 }

@@ -2,13 +2,54 @@ package flightrequests
 
 import "github.com/uzzalhcse/amadeus-go/pkg/validator"
 
+type DateTimeRange struct {
+	Date string `json:"date"`
+	Time string `json:"time"`
+}
+
+type OriginDestination struct {
+	ID                      string        `json:"id"`
+	OriginLocationCode      string        `json:"originLocationCode"`
+	DestinationLocationCode string        `json:"destinationLocationCode"`
+	DepartureDateTimeRange  DateTimeRange `json:"departureDateTimeRange"`
+}
+
+type FareOption struct {
+	TravelerType string   `json:"travelerType"`
+	FareOptions  []string `json:"fareOptions"`
+}
+
+type Traveler struct {
+	ID           string   `json:"id"`
+	TravelerType string   `json:"travelerType"`
+	FareOptions  []string `json:"fareOptions"`
+}
+
+type CabinRestriction struct {
+	Cabin                string   `json:"cabin"`
+	Coverage             string   `json:"coverage"`
+	OriginDestinationIds []string `json:"originDestinationIds"`
+}
+
+type CarrierRestrictions struct {
+	ExcludedCarrierCodes []string `json:"excludedCarrierCodes"`
+}
+
+type FlightFilters struct {
+	CabinRestrictions   []CabinRestriction  `json:"cabinRestrictions"`
+	CarrierRestrictions CarrierRestrictions `json:"carrierRestrictions"`
+}
+
+type SearchCriteria struct {
+	MaxFlightOffers int           `json:"maxFlightOffers"`
+	FlightFilters   FlightFilters `json:"flightFilters"`
+}
+
 type FlightSearchRequest struct {
-	OriginLocationCode      string `json:"origin_location_code" form:"origin_location_code" validate:"required"`
-	DestinationLocationCode string `json:"destination_location_code" form:"destination_location_code" validate:"required"`
-	DepartureDate           string `json:"departure_date" form:"departure_date" validate:"required"`
-	ReturnDate              string `json:"return_date" form:"return_date" validate:"required"`
-	Adult                   string `json:"adult" form:"adult" validate:"required"`
-	IncludedAirlineCodes    string `json:"included_airline_codes" form:"included_airline_codes"`
-	Max                     string `json:"max" form:"max"`
+	CurrencyCode       string              `json:"currencyCode"`
+	OriginDestinations []OriginDestination `json:"originDestinations"`
+	Travelers          []Traveler          `json:"travelers"`
+	Sources            []string            `json:"sources"`
+	SearchCriteria     SearchCriteria      `json:"searchCriteria"`
 	*validator.Request
 }

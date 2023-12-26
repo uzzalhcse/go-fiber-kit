@@ -9,6 +9,7 @@ type FlightService struct {
 	OfferSearchRequest *booking.OfferSearchRequest
 	PricingRequest     *booking.PricingRequest
 	SearchAirports     *flightairport.SearchRequest
+	CreateOrder        *booking.CreateOrderRequest
 }
 
 type HotelService struct {

@@ -3,10 +3,12 @@ package booking
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/uzzalhcse/amadeus-go/pkg/amadeus-go/client"
-	"github.com/uzzalhcse/amadeus-go/pkg/amadeus-go/flight/models"
+	"github.com/uzzalhcse/amadeus-go/pkg/amadeus-go/models"
 	"github.com/uzzalhcse/amadeus-go/pkg/amadeus-go/response"
+	"net/http"
 )
 
 type OfferSearchRequest struct {
@@ -111,24 +113,56 @@ func (r *OfferSearchRequest) Get() (*models.FlightOfferData, error) {
 
 	return &flightOfferData, nil
 }
-func (r *OfferSearchRequest) GetRaw() (interface{}, error) {
+func (r *OfferSearchRequest) Send(requestBody interface{}) (*models.FlightOfferData, error) {
+	err := r.Service.GetAccessToken()
+	if err != nil {
+		return nil, fmt.Errorf("failed to get access token: %w", err)
+	}
+
+	resp, err := r.Service.Client.R().
+		SetBody(requestBody).
+		SetHeader("Authorization", "Bearer "+r.Service.AccessToken).
+		Post("https://test.api.amadeus.com/v2/shopping/flight-offers")
+
+	if err != nil {
+		return nil, fmt.Errorf("request failed: %w", err)
+	}
+
+	statusCode := resp.StatusCode()
+	if statusCode != http.StatusOK {
+		var errorResponse response.ErrorResponse
+		if err := json.Unmarshal(resp.Body(), &errorResponse); err != nil {
+			return nil, fmt.Errorf("failed to unmarshal error response: %w", err)
+		}
+
+		if len(errorResponse.Errors) > 0 {
+			return nil, fmt.Errorf("API error (Status %d): %s", statusCode, errorResponse.Errors[0].Detail)
+		}
+
+		return nil, fmt.Errorf("unexpected status code: %d", statusCode)
+	}
+
+	if len(resp.Body()) == 0 {
+		return nil, errors.New("empty response body")
+	}
+
+	var flightOfferData models.FlightOfferData
+	if err := json.Unmarshal(resp.Body(), &flightOfferData); err != nil {
+		return nil, fmt.Errorf("failed to unmarshal response body: %w", err)
+	}
+
+	return &flightOfferData, nil
+}
+func (r *OfferSearchRequest) GetRaw(requestBody interface{}) (interface{}, error) {
 	err := r.Service.GetAccessToken()
 	if err != nil {
 		return nil, err
 	}
 
 	resp, err := r.Service.Client.R().
-		SetQueryParams(map[string]string{
-			"originLocationCode":      r.originLocationCode,
-			"destinationLocationCode": r.destinationLocationCode,
-			"departureDate":           r.departureDate,
-			"returnDate":              r.returnDate,
-			"adults":                  r.adults,
-			"includedAirlineCodes":    r.includedAirlineCodes,
-			"max":                     r.max,
-		}).
+		SetBody(requestBody).
 		SetHeader("Authorization", "Bearer "+r.Service.AccessToken).
-		Get(r.Service.BaseUrl + "/v2/shopping/flight-offers")
+		Post("https://test.api.amadeus.com/v2/shopping/flight-offers")
 
 	if err != nil {
 		return nil, err

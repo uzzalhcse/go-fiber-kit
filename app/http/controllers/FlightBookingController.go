@@ -32,15 +32,17 @@ func (that *FlightBookingController) OfferSearch(c *fiber.Ctx) error {
 		return responses.Error(c, err.Error())
 	}
 
+	//response, err := that.amadeus.FlightService.OfferSearchRequest.
+	//	OriginLocationCode(request.OriginLocationCode).
+	//	DestinationLocationCode(request.DestinationLocationCode).
+	//	DepartureDate(request.DepartureDate).
+	//	ReturnDate(request.ReturnDate).
+	//	Adult(request.Adult).
+	//	Max(request.Max).
+	//	IncludedAirlineCodes(request.IncludedAirlineCodes).
+	//	Get()
 	response, err := that.amadeus.FlightService.OfferSearchRequest.
-		OriginLocationCode(request.OriginLocationCode).
-		DestinationLocationCode(request.DestinationLocationCode).
-		DepartureDate(request.DepartureDate).
-		ReturnDate(request.ReturnDate).
-		Adult(request.Adult).
-		Max(request.Max).
-		IncludedAirlineCodes(request.IncludedAirlineCodes).
-		Get()
+		Send(request)
 
 	if err != nil {
 		return responses.Error(c, err.Error())
@@ -69,6 +71,20 @@ func (that *FlightBookingController) OfferPrice(c *fiber.Ctx) error {
 	return responses.Success(c, "Offer Search items", fiber.Map{
 		"items": response,
 	})
+}
+
+func (that *FlightBookingController) CreateOrder(c *fiber.Ctx) error {
+	var request flightrequests.CreateOrderRequest
+	response, err := that.amadeus.FlightService.CreateOrder.FlightOffers(request.FlightOfferData).
+		Travelers(request.Travelers).
+		Remarks(request.Remarks).
+		TicketingAgreement(request.TicketingAgreement).
+		Contacts(request.Contacts).
+		Send()
+	if err != nil {
+		return err
+	}
+	return responses.Success(c, "Order Created Successfully", response)
 }
 
 func (that *FlightBookingController) Airports(c *fiber.Ctx) error {

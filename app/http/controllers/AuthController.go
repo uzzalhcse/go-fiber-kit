@@ -13,9 +13,9 @@ import (
 )
 
 type AuthController struct {
-	BaseController *BaseController
-	AuthService    services.AuthService
-	JWTService     services.JWTService
+	*BaseController
+	AuthService services.AuthService
+	JWTService  services.JWTService
 }
 
 func NewAuthController() *AuthController {

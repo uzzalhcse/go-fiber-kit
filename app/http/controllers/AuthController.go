@@ -40,8 +40,8 @@ func (that *AuthController) Login(c *fiber.Ctx) error {
 		return responses.Error(c, err.Error())
 	}
 
-	// Validate the request
-	if err := request.Validate(&request); err != nil {
+	// Validator the request
+	if err := request.Validator(&request); err != nil {
 		return responses.Error(c, err.Error())
 	}
 
@@ -76,7 +76,7 @@ func (that *AuthController) Register(c *fiber.Ctx) error {
 	if err := c.BodyParser(&request); err != nil {
 		return responses.Error(c, err.Error())
 	}
-	if err := request.Validate(&request); err != nil {
+	if err := request.Validator(&request); err != nil {
 		return responses.Error(c, err.Error())
 	}
 
@@ -102,7 +102,7 @@ func (that *AuthController) UpdateProfile(c *fiber.Ctx) error {
 	if err := c.BodyParser(&request); err != nil {
 		return responses.Error(c, err.Error())
 	}
-	if err := request.Validate(&request); err != nil {
+	if err := request.Validator(&request); err != nil {
 		return responses.Error(c, err.Error())
 	}
 
@@ -127,7 +127,7 @@ func (that *AuthController) ForgetPassword(c *fiber.Ctx) error {
 	if err := c.BodyParser(&request); err != nil {
 		return responses.Error(c, err.Error())
 	}
-	if err := request.Validate(&request); err != nil {
+	if err := request.Validator(&request); err != nil {
 		return responses.Error(c, err.Error())
 	}
 

@@ -2,9 +2,9 @@
 
 package authrequests
 
-import "github.com/uzzalhcse/amadeus-go/pkg/validator"
+import "github.com/uzzalhcse/amadeus-go/app/http/requests"
 
 type UpdateProfileRequest struct {
 	// Add fields for updating the user profile
-	*validator.Request
+	*requests.Validate
 }

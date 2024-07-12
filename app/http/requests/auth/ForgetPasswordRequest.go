@@ -2,9 +2,11 @@
 
 package authrequests
 
-import "github.com/uzzalhcse/amadeus-go/pkg/validator"
+import (
+	"github.com/uzzalhcse/amadeus-go/app/http/requests"
+)
 
 type ForgetPasswordRequest struct {
 	// Add fields for initiating forget password process
-	*validator.Request
+	*requests.Validate
 }

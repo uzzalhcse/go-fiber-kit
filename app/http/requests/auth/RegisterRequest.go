@@ -2,12 +2,12 @@
 
 package authrequests
 
-import "github.com/uzzalhcse/amadeus-go/pkg/validator"
+import "github.com/uzzalhcse/amadeus-go/app/http/requests"
 
 type RegisterRequest struct {
 	Name     string `json:"name" validate:"required"`
 	Email    string `json:"email" validate:"required"`
 	Username string `json:"username" validate:"required"`
 	Password string `json:"password" validate:"required,min=6"`
-	*validator.Request
+	*requests.Validate
 }

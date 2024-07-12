@@ -1,4 +1,4 @@
-package validator
+package requests
 
 import (
 	"fmt"
@@ -8,7 +8,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-type Request struct {
+type Validate struct {
 }
 
 var validate *validator.Validate
@@ -18,8 +18,8 @@ func init() {
 }
 
 // Validate validates a parsed request using the go-playground validator
-func (m *Request) Validate(req interface{}) error {
-	// Validate the request using the initialized validator
+func (m *Validate) Validator(req interface{}) error {
+	// Validator the request using the initialized validator
 	if err := validate.Struct(req); err != nil {
 		// If validation fails, construct a human-readable error message
 		var validationErrors []string
@@ -53,14 +53,14 @@ func (m *Request) Validate(req interface{}) error {
 }
 
 // ParseAndValidate parses and validates a request
-func (m *Request) ParseAndValidate(c *fiber.Ctx, req interface{}) error {
+func (m *Validate) ParseAndValidate(c *fiber.Ctx, req interface{}) error {
 	// Check content type and parse accordingly
 	if err := c.BodyParser(req); err != nil {
 		return fiber.NewError(fiber.StatusBadRequest, err.Error())
 	}
 
-	// Validate the request
-	if err := m.Validate(req); err != nil {
+	// Validator the request
+	if err := m.Validator(req); err != nil {
 		return err
 	}
 

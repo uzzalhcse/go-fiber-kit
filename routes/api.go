@@ -2,10 +2,10 @@ package routes
 
 import (
 	"github.com/gofiber/fiber/v2"
-	"github.com/uzzalhcse/amadeus-go/app/http/controllers"
-	"github.com/uzzalhcse/amadeus-go/app/repositories"
-	"github.com/uzzalhcse/amadeus-go/app/services"
-	"github.com/uzzalhcse/amadeus-go/bootstrap"
+	"github.com/uzzalhcse/go-fiber-kit/app/http/controllers"
+	"github.com/uzzalhcse/go-fiber-kit/app/repositories"
+	"github.com/uzzalhcse/go-fiber-kit/app/services"
+	"github.com/uzzalhcse/go-fiber-kit/bootstrap"
 )
 
 func SetUpApiRoutes(api fiber.Router) {

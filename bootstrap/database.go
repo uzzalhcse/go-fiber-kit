@@ -2,9 +2,9 @@ package bootstrap
 
 import (
 	"fmt"
-	"github.com/uzzalhcse/amadeus-go/app/exceptions"
-	"github.com/uzzalhcse/amadeus-go/config"
-	"github.com/uzzalhcse/amadeus-go/database"
+	"github.com/uzzalhcse/go-fiber-kit/app/exceptions"
+	"github.com/uzzalhcse/go-fiber-kit/config"
+	"github.com/uzzalhcse/go-fiber-kit/database"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )

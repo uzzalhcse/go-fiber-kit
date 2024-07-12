@@ -1,6 +1,6 @@
 package authrequests
 
-import "github.com/uzzalhcse/amadeus-go/app/http/requests"
+import "github.com/uzzalhcse/go-fiber-kit/app/http/requests"
 
 type LoginRequest struct {
 	Username string `json:"username" validate:"required,min=5,max=50"`

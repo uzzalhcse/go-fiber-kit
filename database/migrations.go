@@ -2,7 +2,7 @@ package database
 
 import (
 	"fmt"
-	"github.com/uzzalhcse/amadeus-go/app/models"
+	"github.com/uzzalhcse/go-fiber-kit/app/models"
 	"gorm.io/gorm"
 )
 

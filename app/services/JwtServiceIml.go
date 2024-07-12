@@ -2,7 +2,7 @@ package services
 
 import (
 	"github.com/dgrijalva/jwt-go"
-	"github.com/uzzalhcse/amadeus-go/app/models"
+	"github.com/uzzalhcse/go-fiber-kit/app/models"
 	"strconv"
 	"time"
 )

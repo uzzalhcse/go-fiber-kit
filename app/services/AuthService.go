@@ -2,7 +2,7 @@
 
 package services
 
-import "github.com/uzzalhcse/amadeus-go/app/models"
+import "github.com/uzzalhcse/go-fiber-kit/app/models"
 
 type AuthService interface {
 	Authenticate(username, password string) (bool, error)

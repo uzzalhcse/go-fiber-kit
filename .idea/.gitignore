@@ -13,3 +13,4 @@ logs/
 .terraform/
 .idea/
 .vscode/
+/dataSources.local.xml

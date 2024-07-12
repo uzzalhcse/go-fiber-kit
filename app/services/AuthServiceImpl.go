@@ -3,8 +3,8 @@
 package services
 
 import (
-	"github.com/uzzalhcse/amadeus-go/app/models"
-	"github.com/uzzalhcse/amadeus-go/app/repositories"
+	"github.com/uzzalhcse/go-fiber-kit/app/models"
+	"github.com/uzzalhcse/go-fiber-kit/app/repositories"
 	"golang.org/x/crypto/bcrypt"
 )
 

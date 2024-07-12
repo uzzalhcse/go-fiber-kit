@@ -10,7 +10,7 @@ import (
 	"syscall"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/uzzalhcse/amadeus-go/config"
+	"github.com/uzzalhcse/go-fiber-kit/config"
 	"gorm.io/gorm"
 )
 

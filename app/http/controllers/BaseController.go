@@ -2,7 +2,7 @@
 
 package controllers
 
-import "github.com/uzzalhcse/amadeus-go/bootstrap"
+import "github.com/uzzalhcse/go-fiber-kit/bootstrap"
 
 // BaseController contains the application instance
 type BaseController struct {

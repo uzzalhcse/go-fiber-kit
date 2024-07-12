@@ -3,7 +3,7 @@ package tests
 
 import (
 	"github.com/stretchr/testify/assert"
-	"github.com/uzzalhcse/amadeus-go/bootstrap"
+	"github.com/uzzalhcse/go-fiber-kit/bootstrap"
 	"sync"
 	"testing"
 )

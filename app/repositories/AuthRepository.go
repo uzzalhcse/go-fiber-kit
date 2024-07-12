@@ -2,7 +2,7 @@
 
 package repositories
 
-import "github.com/uzzalhcse/amadeus-go/app/models"
+import "github.com/uzzalhcse/go-fiber-kit/app/models"
 
 type AuthRepository interface {
 	FindUserByUsername(username string) (*models.User, error)

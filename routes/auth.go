@@ -2,8 +2,8 @@ package routes
 
 import (
 	"github.com/gofiber/fiber/v2"
-	"github.com/uzzalhcse/amadeus-go/app/http/controllers"
-	"github.com/uzzalhcse/amadeus-go/app/http/middleware"
+	"github.com/uzzalhcse/go-fiber-kit/app/http/controllers"
+	"github.com/uzzalhcse/go-fiber-kit/app/http/middleware"
 )
 
 func SetUpAuthRoutes(api fiber.Router) {

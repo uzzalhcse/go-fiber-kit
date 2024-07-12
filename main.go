@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
-	"github.com/uzzalhcse/amadeus-go/app/exceptions"
-	"github.com/uzzalhcse/amadeus-go/bootstrap"
-	"github.com/uzzalhcse/amadeus-go/routes"
+	"github.com/uzzalhcse/go-fiber-kit/app/exceptions"
+	"github.com/uzzalhcse/go-fiber-kit/bootstrap"
+	"github.com/uzzalhcse/go-fiber-kit/routes"
 )
 
 func main() {

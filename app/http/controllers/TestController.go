@@ -2,7 +2,7 @@ package controllers
 
 import (
 	"github.com/gofiber/fiber/v2"
-	"github.com/uzzalhcse/amadeus-go/app/services"
+	"github.com/uzzalhcse/go-fiber-kit/app/services"
 )
 
 // TestController defines a controller for handling test-related requests

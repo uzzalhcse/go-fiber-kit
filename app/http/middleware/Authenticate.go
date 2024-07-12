@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gofiber/fiber/v2"
-	"github.com/uzzalhcse/amadeus-go/app/models"
-	"github.com/uzzalhcse/amadeus-go/bootstrap"
+	"github.com/uzzalhcse/go-fiber-kit/app/models"
+	"github.com/uzzalhcse/go-fiber-kit/bootstrap"
 	"strconv"
 )
 

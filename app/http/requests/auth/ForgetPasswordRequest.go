@@ -3,7 +3,7 @@
 package authrequests
 
 import (
-	"github.com/uzzalhcse/amadeus-go/app/http/requests"
+	"github.com/uzzalhcse/go-fiber-kit/app/http/requests"
 )
 
 type ForgetPasswordRequest struct {

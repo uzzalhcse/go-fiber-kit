@@ -4,11 +4,11 @@ package controllers
 
 import (
 	"github.com/gofiber/fiber/v2"
-	authrequests "github.com/uzzalhcse/amadeus-go/app/http/requests/auth"
-	"github.com/uzzalhcse/amadeus-go/app/http/responses"
-	"github.com/uzzalhcse/amadeus-go/app/models"
-	"github.com/uzzalhcse/amadeus-go/app/repositories"
-	"github.com/uzzalhcse/amadeus-go/app/services"
+	authrequests "github.com/uzzalhcse/go-fiber-kit/app/http/requests/auth"
+	"github.com/uzzalhcse/go-fiber-kit/app/http/responses"
+	"github.com/uzzalhcse/go-fiber-kit/app/models"
+	"github.com/uzzalhcse/go-fiber-kit/app/repositories"
+	"github.com/uzzalhcse/go-fiber-kit/app/services"
 	"log"
 )
 
